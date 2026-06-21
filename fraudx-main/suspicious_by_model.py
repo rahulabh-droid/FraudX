@@ -96,13 +96,11 @@ def preprocess_data(df, scaler):
     df = _ensure_required_columns(df)
     categorical_columns = ['Sender_Country', 'Receiver_Country', 'Payment_Method', 'Transaction_Currency']
     df_encoded = pd.get_dummies(df, columns=categorical_columns)
-    
-    for col in scaler.feature_names_in_:
-        if col not in df_encoded.columns:
-            df_encoded[col] = 0
-    
-    df_encoded = df_encoded[scaler.feature_names_in_]
-    
+
+    df_encoded = df_encoded.reindex(
+    columns=scaler.feature_names_in_,
+    fill_value=0
+    )
     return df_encoded
 
 def explain_suspicion(row, feature_importances, historical_data, threshold=0.05):
