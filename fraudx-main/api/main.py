@@ -59,6 +59,9 @@ try:
             "feature_columns.joblib"
         )
     )
+    print("MODEL TYPE:", type(model))
+    print("SCALER TYPE:", type(scaler))
+    print("FEATURE COUNT:", len(scaler.feature_names_in_))
 
     print("Models loaded successfully")
 
