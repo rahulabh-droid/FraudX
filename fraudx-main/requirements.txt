@@ -6,3 +6,6 @@ joblib
 plotly
 faker
 matplotlib
+fastapi
+uvicorn
+python-multipart
