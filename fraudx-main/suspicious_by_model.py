@@ -57,13 +57,22 @@ def patch_model_for_compatibility(model):
 def detect_suspicious_transactions(df, model, scaler, threshold=0.5):
     # Patch the model for compatibility
     model = patch_model_for_compatibility(model)
-    
+    import time
+
     df = _ensure_required_columns(df)
+
+    t1 = time.time()
     X = preprocess_data(df, scaler)
+    print("PREPROCESS TIME:", time.time() - t1)
+
+    t2 = time.time()
     X_scaled = scaler.transform(X)
+    print("SCALING TIME:", time.time() - t2)
     
     try:
+        t3 = time.time()
         y_pred_proba = model.predict_proba(X_scaled)[:, 1]
+        print("PREDICT TIME:", time.time() - t3)
     except AttributeError as e:
         if 'monotonic_cst' in str(e):
             # If the error persists, try a different approach
@@ -83,6 +92,7 @@ def detect_suspicious_transactions(df, model, scaler, threshold=0.5):
     return df
 
 def preprocess_data(df, scaler):
+    print("FEATURE COUNT:", len(scaler.feature_names_in_))
     df = _ensure_required_columns(df)
     categorical_columns = ['Sender_Country', 'Receiver_Country', 'Payment_Method', 'Transaction_Currency']
     df_encoded = pd.get_dummies(df, columns=categorical_columns)
