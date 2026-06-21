@@ -71,7 +71,15 @@ def detect_suspicious_transactions(df, model, scaler, threshold=0.5):
     
     try:
         t3 = time.time()
-        y_pred_proba = model.predict_proba(X_scaled)[:, 1]
+
+        proba = model.predict_proba(X_scaled)
+
+        print("PROBA SHAPE:", proba.shape)
+        print("PROBA:", proba)
+        print("CLASSES:", model.classes_)
+
+        y_pred_proba = proba[:, 1]
+
         print("RAW PROBABILITY:", y_pred_proba)
         print("PREDICT TIME:", time.time() - t3)
     except AttributeError as e:
