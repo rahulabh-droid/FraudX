@@ -83,7 +83,7 @@ class _FraudScreenState extends State<FraudScreen> {
     try {
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("http://10.118.224.111:8000/api/v1/upload-csv"),
+        Uri.parse("https://api.fraudx.tech/api/v1/upload-csv"),
       );
 
       request.files.add(
@@ -112,7 +112,7 @@ class _FraudScreenState extends State<FraudScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse("http://10.118.224.111:8000/api/v1/detect-fraud"),
+        Uri.parse("https://api.fraudx.tech/api/v1/detect-fraud"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "transaction_id": transactionController.text,
