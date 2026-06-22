@@ -63,6 +63,7 @@ def detect_suspicious_transactions(df, model, scaler, threshold=0.5):
 
     t1 = time.time()
     X = preprocess_data(df, scaler)
+    print("X SHAPE:", X.shape)
     print("PREPROCESS TIME:", time.time() - t1)
 
     t2 = time.time()
@@ -71,6 +72,9 @@ def detect_suspicious_transactions(df, model, scaler, threshold=0.5):
     
     try:
         t3 = time.time()
+        print("X_SCALED SHAPE:", X_scaled.shape)
+        print("X_SCALED MAX:", X_scaled.max())
+        print("X_SCALED MIN:", X_scaled.min())
 
         proba = model.predict_proba(X_scaled)
 
