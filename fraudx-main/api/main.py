@@ -60,6 +60,7 @@ try:
         )
     )
     print("MODEL TYPE:", type(model))
+    print("MODEL N_ESTIMATORS:", model.n_estimators)
     print("SCALER TYPE:", type(scaler))
     print("FEATURE COUNT:", len(scaler.feature_names_in_))
 
