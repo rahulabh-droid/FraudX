@@ -192,7 +192,7 @@ async def detect_fraud(transaction: TransactionRequest):
             input_df,
             model,
             scaler,
-            threshold=0.5
+            threshold=0.4
         )
 
         fraud_score = float(
