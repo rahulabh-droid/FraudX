@@ -59,16 +59,6 @@ try:
             "feature_columns.joblib"
         )
     )
-    print("MODEL TYPE:", type(model))
-    print("MODEL N_ESTIMATORS:", model.n_estimators)
-    import sklearn
-    print("SKLEARN VERSION:", sklearn.__version__)
-    import numpy as np
-    print("STARTUP ZERO TEST:", model.predict_proba(np.zeros((1, len(scaler.feature_names_in_)))))
-    print("SCALER TYPE:", type(scaler))
-    print("FEATURE COUNT:", len(scaler.feature_names_in_))
-
-    print("Models loaded successfully")
 
 except Exception as e:
     print(f"Error loading models: {e}")

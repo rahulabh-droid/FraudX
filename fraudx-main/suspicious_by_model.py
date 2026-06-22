@@ -73,30 +73,9 @@ def detect_suspicious_transactions(df, model, scaler, threshold=0.5):
     try:
         t3 = time.time()
 
-        import numpy as np
-
-        print("X_SCALED SHAPE:", X_scaled.shape)
-        print("X_SCALED MAX:", X_scaled.max())
-        print("X_SCALED MIN:", X_scaled.min())
-
-        print("NAN COUNT:", np.isnan(X_scaled).sum())
-        print("INF COUNT:", np.isinf(X_scaled).sum())
-
-        print("MODEL TYPE:", type(model))
-        print("MODEL N_ESTIMATORS:", model.n_estimators)
-
         proba = model.predict_proba(X_scaled)
-
-        print("PROBA TYPE:", type(proba))
-        print("PROBA DTYPE:", proba.dtype)
-        print("PROBA SHAPE:", proba.shape)
-        print("PROBA:", proba)
-        print("CLASSES:", model.classes_)
-
         y_pred_proba = proba[:, 1]
 
-        print("RAW PROBABILITY:", y_pred_proba)
-        print("PREDICT TIME:", time.time() - t3)
     except AttributeError as e:
         if 'monotonic_cst' in str(e):
             # If the error persists, try a different approach
