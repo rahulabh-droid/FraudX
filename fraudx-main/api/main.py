@@ -18,8 +18,8 @@ import numpy as np
 from typing import List, Optional
 import time
 from datetime import datetime
-from database import engine, SessionLocal, Base
-from models import Transaction
+from api.database import engine, SessionLocal, Base
+from api.models import Transaction
 app = FastAPI(title="FraudX API", version="1.0.0")
 Base.metadata.create_all(bind=engine)
 
