@@ -18,8 +18,10 @@ import numpy as np
 from typing import List, Optional
 import time
 from datetime import datetime
-
+from database import engine, SessionLocal, Base
+from models import Transaction
 app = FastAPI(title="FraudX API", version="1.0.0")
+Base.metadata.create_all(bind=engine)
 
 # CORS middleware
 app.add_middleware(
@@ -195,6 +197,22 @@ async def detect_fraud(transaction: TransactionRequest):
         )
 
         processing_time = time.time() - start_time
+        db = SessionLocal()
+
+        db_transaction = Transaction(
+            transaction_id=transaction.transaction_id,
+            amount=transaction.amount,
+            sender_id=transaction.sender_id,
+            receiver_id=transaction.receiver_id,
+            fraud_score=fraud_score,
+            is_suspicious=bool(
+                result_df["Is_Suspicious"].iloc[0]
+            )
+        )
+
+        db.add(db_transaction)
+        db.commit()
+        db.close()
 
         return FraudResponse(
             transaction_id=transaction.transaction_id,
