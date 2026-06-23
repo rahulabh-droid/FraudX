@@ -278,3 +278,12 @@ async def upload_csv(
         "fraud_rate":
             fraud_rate
 }
+@app.get("/api/v1/transactions")
+def get_transactions():
+    db = SessionLocal()
+
+    transactions = db.query(Transaction).all()
+
+    db.close()
+
+    return transactions
